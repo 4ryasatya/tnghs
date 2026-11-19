@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Respons vegetasi terhadap kekeringan · TNGHS</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Codes/style.css">
+</head>
+<body>
+<main>
+  <h1>Analisis Respons Vegetasi Terhadap Kekeringan</h1>
+  <p class="lead">Taman Nasional Gunung Halimun Salak. Hubungan SPI dan anomali EVI pada unit grid CHIRPS (±5,5 km), dengan lag 0–3 bulan. Klik sebuah sel pada peta untuk melihat unit itu.</p>
+
+  <div class="bar">
+    <label>Unit<select id="unit"></select></label>
+    <label>Skala SPI<select id="spi"></select></label>
+    <label>Dari tahun<input id="y0" type="number"></label>
+    <label>Sampai<input id="y1" type="number"></label>
+    <label>Musim (bulan SPI)<select id="season"><option value="all">Semua bulan</option><option value="dry">Kemarau (Mei–Sep)</option><option value="wet">Hujan (Nov–Apr)</option></select></label>
+    <label>Lag dominan<select id="mode"><option value="r">r tertinggi</option><option value="abs">|r| tertinggi</option></select></label>
+  </div>
+
+  <div id="err" class="panel empty" hidden></div>
+
+  <section class="grid" id="content">
+    <div class="panel">
+      <div class="mapbar">
+        <label>Peta menampilkan<select id="layer">
+          <option value="rdom">Korelasi (r) pada lag dominan</option>
+          <option value="lagdom">Lag dominan</option>
+          <option value="EVI">EVI bulanan</option>
+          <option value="anom">Anomali EVI bulanan</option>
+          <option value="spi">SPI bulanan</option>
+          <option value="pr">Curah hujan bulanan</option>
+        </select></label>
+        <label class="slider">Bulan: <b id="dlabel">–</b><input id="slider" type="range" min="0" max="0" value="0"></label>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div class="panel">
+      <h2>Korelasi SPI dan anomali EVI menurut lag</h2>
+      <p class="verdict" id="verdict"></p>
+      <p class="note">Lag k berarti SPI bulan t dipasangkan dengan anomali EVI bulan t+k. Batang oranye menandai lag dominan.</p>
+      <div id="cLag" class="chart" style="height:300px"></div>
+    </div>
+    <div class="panel wide">
+      <h2>Deret waktu</h2>
+      <p class="note">SPI (biru) dan anomali EVI (hijau). Garis putus-putus menandai bulan pada slider peta.</p>
+      <div id="cTs" class="chart" style="height:320px"></div>
+    </div>
+    <div class="panel">
+      <h2>Pola musiman</h2>
+      <p class="note">Rata-rata EVI dan curah hujan per bulan kalender (Data tahun 2005-2025).</p>
+      <div id="cSea" class="chart" style="height:300px"></div>
+    </div>
+    <div class="panel">
+      <h2>Ketersediaan data EVI</h2>
+      <p class="note">Persentase bulan EVI kosong per tahun (awan, celah sensor).</p>
+      <div id="cNan" class="chart" style="height:300px"></div>
+    </div>
+    <div class="panel wide">
+      <h2>Rincian per unit</h2>
+      <div class="scroll" id="tbl"></div>
+    </div>
+  </section>
+
+  <p class="caveat">Unit grid CHIRPS saling berdekatan dan nilai SPI-nya mirip, sehingga unit bukan sampel independen. Tafsirkan p-value dengan hati-hati. Angka dihitung di peramban dari tabel hasil ekspor GEE; cocokkan dengan keluaran notebook sebelum dipublikasikan. EVI bersumber dari Landsat (komposit median bulanan), SPI dari CHIRPS.</p>
+
+  <footer class="logos">
+  <img src="assets/ugm png_itemputih.png" alt="Logo Universitas Gadjah Mada">
+  <img src="assets/logoBMKG.png" alt="Logo BMKG">
+  <p>Analisis oleh Demas Wistara Aryasatya</p>
+  <p>Sarjana Terapan Sistem Informasi Geografis Departemen Teknologi Kebumian Sekolah Vokasi</p>
+  <p>Universitas Gadjah Mada</p>
+</footer>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="lib/plotly-2.35.2.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
