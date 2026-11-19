@@ -31,9 +31,9 @@
     });
   }
   function init() {
-    var boundary = fetch("data/tnghs_latlong.geojson").then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
-    Promise.all([getText("data/tnghs_all.csv").then(function (r) { return r.text(); }),
-                 getText("data/grid_tnghs.geojson").then(function (r) { return r.json(); }),
+    var boundary = fetch("Codes/data/tnghs_latlong.geojson").then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    Promise.all([getText("Codes/data/tnghs_all.csv").then(function (r) { return r.text(); }),
+                 getText("Codes/data/grid_tnghs.geojson").then(function (r) { return r.json(); }),
                  boundary])
       .then(function (res) { setup(parseCSV(res[0]), res[1], res[2]); })
       .catch(function (e) {
